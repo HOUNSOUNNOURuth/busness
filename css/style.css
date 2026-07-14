@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-emerald-deep: #1A56DB;
+  --color-emerald-dark: #12377E;
+  --color-ivory: #F5F8FF;
+  --color-coal: #16233A;
+  --color-ember: #D8452F;
+  --color-gold: #C99A2E;
+  --color-sand: #DCE6F5;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
