@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créer un compte — Kalao Boutique</title>
+
+<link href="./dist/output.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  body { background-color: #F5F8FF; }
+  .underline-grow { position: relative; }
+  .underline-grow::after {
+    content: ''; position: absolute; left: 0; bottom: -3px; height: 2px; width: 0%;
+    background: currentColor; transition: width .3s ease;
+  }
+  .underline-grow:hover::after { width: 100%; }
+  @keyframes gradientSlide {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .title-badge {
+    background: linear-gradient(270deg, #1A56DB, #12377E, #D8452F, #1A56DB);
+    background-size: 400% 400%;
+    animation: gradientSlide 6s ease infinite;
+  }
+</style>
+</head>
+<body class="font-body text-coal min-h-screen flex flex-col">
+
+<header class="bg-ivory border-b border-sand">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <a href="index.html" class="flex items-center gap-2 w-fit">
+      <div class="w-10 h-10 rounded-full bg-emerald-deep flex items-center justify-center text-ivory font-display text-lg">K</div>
+      <span class="font-display text-2xl font-semibold tracking-tight text-coal">Kalao<span class="text-emerald-deep">.</span></span>
+    </a>
+  </div>
+</header>
+
+<main class="flex-1 flex items-center justify-center px-4 py-12">
+  <div class="w-full max-w-md bg-white rounded-2xl border border-sand shadow-sm p-8">
+    <div class="flex justify-center mb-6">
+      <h1 class="title-badge font-display text-2xl font-semibold text-ivory rounded-full px-8 py-3">Créer un compte</h1>
+    </div>
+    <p class="text-sm text-coal/50 mb-6 text-center">Remplissez vos informations pour continuer</p>
+    <form id="inscription-form" class="flex flex-col gap-4">
+      <div>
+        <label class="text-sm font-medium block mb-1" for="nom">Nom</label>
+        <input id="nom" type="text" required placeholder="Ex: Dupont" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+      </div>
+
+      <div class="w-full text-center">
+        <label class="text-sm font-medium block mb-1" for="prenom">Prénom</label>
+        <input id="prenom" type="text" required placeholder="Ex: David" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+      </div>
+
+      <div class="w-full text-center">
+        <label class="text-sm font-medium block mb-1" for="whatsapp">Numéro WhatsApp</label>
+        <input id="whatsapp" type="tel" required placeholder="Ex : 229 01 65 01 62 29" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+      </div>
+
+      <div class="w-full text-center">
+        <label class="text-sm font-medium block mb-1" for="email">Email</label>
+        <input id="email" type="email" required placeholder="Ex:dupontdavid@example.com" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+      </div>
+
+      <div class="w-full text-center">
+        <label class="text-sm font-medium block mb-1" for="password">Mot de passe</label>
+        <input id="password" type="password" required placeholder="••••••••" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+      </div>
+      <div>
+        <label class="text-sm font-medium block mb-1" for="password-confirm">Confirmer le mot de passe</label>
+        <input id="password-confirm" type="password" required placeholder="••••••••" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+      </div>
+
+      <p id="password-error" class="hidden text-xs text-ember">Les mots de passe ne correspondent pas.</p>
+
+      <button type="submit" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-sm font-semibold py-3 rounded-lg mt-2">Créer mon compte</button>
+      <a href="connexion.html" class="text-center text-sm font-medium underline-grow">Déjà un compte ? Se connecter</a>
+    </form>
+
+    <div id="success-msg" class="hidden mt-4 text-sm text-emerald-deep bg-emerald-deep/10 border border-emerald-deep/20 rounded-lg px-4 py-3">
+      ✓ Compte créé avec succès !
+    </div>
+
+    <div class="flex items-start gap-2 mt-6 pt-6 border-t border-sand">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-coal/40 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+      </svg>
+      <p class="text-xs text-coal/50 leading-relaxed">Vos données sont confidentielles et ne seront jamais partagées avec des tiers. Elles servent uniquement à vous contacter au sujet de vos commandes.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-emerald-dark text-ivory/80">
+  <div class="max-w-7xl mx-auto px-6 py-8 text-sm flex flex-col sm:flex-row justify-between gap-4">
+    <p class="font-display text-lg text-ivory">Kalao Boutique</p>
+    <p>© 2026 Kalao Boutique — Tous droits réservés.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('inscription-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const pass = document.getElementById('password').value;
+    const passConfirm = document.getElementById('password-confirm').value;
+    const errorMsg = document.getElementById('password-error');
+
+    if (pass !== passConfirm) {
+      errorMsg.classList.remove('hidden');
+      return;
+    }
+    errorMsg.classList.add('hidden');
+
+    // ⚠️ Pour l'instant, ce formulaire ne fait qu'afficher un message de confirmation.
+    // Il n'enregistre nulle part encore — il faudra le relier à une vraie base de données plus tard.
+    document.getElementById('inscription-form').classList.add('hidden');
+    document.getElementById('success-msg').classList.remove('hidden');
+  });
+</script>
+</body>
+</html>

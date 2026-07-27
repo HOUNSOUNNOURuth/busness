@@ -99,12 +99,12 @@
 
       <!-- Connexion / catégorie / panier -->
       <div class="flex items-center justify-end gap-6 shrink-0">
-        <button class="flex items-center gap-2 text-sm font-medium underline-grow">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 0115 0"/>
-          </svg>
-          Se connecter
-        </button>
+        <a href="connexion.html" target="_blank" class="flex items-center gap-2 text-sm font-medium underline-grow">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a8.25 8.25 0 0115 0"/>
+  </svg>
+  Se connecter
+</a>
 
         <div class="relative group">
           <button class="flex items-center gap-1 text-sm font-medium underline-grow">
@@ -113,13 +113,15 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
-          <div class="absolute right-0 mt-2 w-52 bg-white border border-sand rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition py-2">
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-sand/60">Compléments alimentaires</a>
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-sand/60">Bien-être &amp; vitamines</a>
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-sand/60">Sport &amp; nutrition</a>
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-sand/60">Beauté &amp; soins</a>
+<div class="absolute right-0 top-full pt-2 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+  <div class="bg-white border border-sand rounded-xl shadow-lg py-2">            
+    <a href="ordinateurs.html" target="_blank" class="block px-4 py-2 text-sm hover:bg-sand/60">Ordinateurs</a>
+    <a href="tablettes.html" target="_blank" class="block px-4 py-2 text-sm hover:bg-sand/60">Tablettes</a>
+    <a href="smartphones.html" target="_blank" class="block px-4 py-2 text-sm hover:bg-sand/60">Smartphones</a>
+    <a href="accessoires.html" target="_blank" class="block px-4 py-2 text-sm hover:bg-sand/60">Accessoires</a>
           </div>
         </div>
+     </div>
 
         <button class="relative flex items-center gap-2 text-sm font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
@@ -133,33 +135,19 @@
   </div>
 
   <!-- barre de navigation catégories -->
-  <nav class="border-t border-sand bg-white/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-8 overflow-x-auto text-sm font-medium py-3 no-scrollbar">
-      <a href="#" class="text-ember whitespace-nowrap underline-grow">Ventes flash</a>
-      <a href="#" class="whitespace-nowrap underline-grow">Nouveautés</a>
-      <a href="#" class="whitespace-nowrap underline-grow">Vitamines &amp; minéraux</a>
-      <a href="#" class="whitespace-nowrap underline-grow">Sport &amp; muscu</a>
-      <a href="#" class="whitespace-nowrap underline-grow">Peau &amp; cheveux</a>
-      <a href="#" class="whitespace-nowrap underline-grow">Meilleures ventes</a>
-    </div>
-  </nav>
+  
 </header>
 
-<!-- ===================== BANNIÈRE MARQUE / TICKET PROMO ===================== -->
+<!-- ===================== BANNIÈRE D'ACCUEIL ===================== -->
 <section class="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
   <div class="ticket rounded-2xl px-6 sm:px-10 py-5 flex flex-wrap items-center justify-between gap-4 text-ivory">
     <div class="flex items-center gap-3">
       <span class="text-2xl">⚡</span>
       <div>
-        <p class="font-display text-xl font-semibold leading-none">WeightWorld</p>
-        <p class="text-ivory/70 text-xs mt-1">Marque en vedette du moment</p>
+        <p class="font-display text-xl font-semibold leading-none">Bienvenue chez Kalao</p>
+        <p class="text-ivory/70 text-xs mt-1">Toutes les marques, tous les états</p>
       </div>
     </div>
-    <div class="flex items-center gap-3 text-sm">
-      <span class="text-ivory/70">Se termine dans</span>
-      <div id="countdown" class="font-mono font-semibold text-lg bg-black/15 rounded-lg px-3 py-1 tabular-nums">00:11:27</div>
-    </div>
-    <a href="#" class="text-sm font-semibold underline-grow whitespace-nowrap">Voir tous les articles →</a>
   </div>
   <div class="ticket-perf mx-6 sm:mx-10"></div>
 </section>
@@ -167,79 +155,14 @@
 <!-- ===================== GRILLE D'ARTICLES ===================== -->
 <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
   <div class="flex items-baseline justify-between mb-6">
-    <h2 class="font-display text-2xl font-semibold">Articles WeightWorld</h2>
-    <span class="text-sm text-coal/50">6 articles</span>
+    <h2 class="font-display text-2xl font-semibold" id="grid-title">Tous nos articles</h2>
+    <span class="text-sm text-coal/50" id="grid-count"></span>
   </div>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5" id="product-grid"></div>
 </main>
-
-<!-- ===================== MODAL DÉTAILS PRODUIT ===================== -->
-<div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
-  <div id="modal-backdrop" class="absolute inset-0 bg-coal/50 backdrop-blur-sm"></div>
-  <div class="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-    <button id="modal-close" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-sand hover:bg-emerald-deep hover:text-white flex items-center justify-center transition z-10">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-    <div class="grid sm:grid-cols-2 gap-0">
-      <div id="modal-image" class="aspect-square flex items-center justify-center"></div>
-      <div class="p-6 flex flex-col gap-3">
-        <span id="modal-discount" class="self-start bg-ember text-white text-xs font-bold px-2 py-1 rounded-md"></span>
-        <h3 id="modal-name" class="font-display text-xl font-semibold leading-snug"></h3>
-        <div id="modal-stars" class="flex items-center gap-1"></div>
-        <div class="flex items-baseline gap-2">
-          <span id="modal-price" class="font-mono font-bold text-2xl"></span>
-          <span id="modal-oldprice" class="text-sm text-coal/40 line-through"></span>
-        </div>
-        <p id="modal-desc" class="text-sm text-coal/70 leading-relaxed"></p>
-        <p id="modal-stock" class="text-xs text-coal/50"></p>
-        <div class="flex flex-col gap-2 mt-auto pt-3">
-          <button id="modal-add" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-sm font-semibold py-2.5 rounded-lg">Ajouter au panier</button>
-          <a id="modal-whatsapp" href="#" target="_blank" class="flex items-center justify-center gap-2 border border-sand hover:border-[#25D366] hover:text-[#128C4A] transition text-sm font-medium py-2.5 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.17L2 22l5.06-1.53a9.9 9.9 0 004.98 1.34c5.46 0 9.91-4.45 9.91-9.9C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.1.11-1.78-.11-.41-.13-.94-.3-1.62-.6-2.86-1.24-4.72-4.13-4.87-4.32-.14-.2-1.16-1.55-1.16-2.96 0-1.4.73-2.09 1-2.38.24-.27.53-.34.71-.34h.5c.16 0 .38-.02.58.45.24.56.79 1.94.86 2.08.07.14.12.31.02.5-.1.2-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.3.76 1.26 1.63 2.05 1.12 1 2.06 1.32 2.36 1.47.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.24.66-.14.28.1 1.78.84 2.08 1 .3.15.5.23.57.36.07.13.07.75-.17 1.42z"/></svg>
-            Discuter sur WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== MODAL AVIS ===================== -->
-<div id="reviews-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
-  <div id="reviews-backdrop" class="absolute inset-0 bg-coal/50 backdrop-blur-sm"></div>
-  <div class="relative bg-white rounded-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl p-6">
-    <button id="reviews-close" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-sand hover:bg-emerald-deep hover:text-white flex items-center justify-center transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-    <h3 id="reviews-title" class="font-display text-xl font-semibold mb-1"></h3>
-    <div id="reviews-summary" class="flex items-center gap-2 mb-4"></div>
-
-    <div id="reviews-list" class="flex flex-col gap-4 mb-6 border-t border-sand pt-4"></div>
-
-    <div class="border-t border-sand pt-4">
-      <p class="text-sm font-semibold mb-2">Laisser un avis</p>
-      <div id="reviews-star-picker" class="flex gap-1 mb-2"></div>
-      <input id="reviews-name" type="text" placeholder="Votre nom" class="w-full border border-sand rounded-lg px-3 py-2 text-sm mb-2 outline-none focus:border-emerald-deep">
-      <textarea id="reviews-comment" placeholder="Votre commentaire..." rows="3" class="w-full border border-sand rounded-lg px-3 py-2 text-sm mb-2 outline-none focus:border-emerald-deep resize-none"></textarea>
-      <button id="reviews-submit" class="w-full bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-sm font-semibold py-2.5 rounded-lg">Publier l'avis</button>
-    </div>
-  </div>
-</div>
-
-<footer class="bg-emerald-dark text-ivory/80 mt-16">
-  <div class="max-w-7xl mx-auto px-6 py-10 text-sm flex flex-col sm:flex-row justify-between gap-4">
-    <p class="font-display text-lg text-ivory">Kalao Boutique</p>
-    <p>© 2026 Kalao Boutique — Tous droits réservés.</p>
-  </div>
-</footer>
-
-<script>
-  // ---- Données produits (exemple) ----
+<script >
+  // ---- Données produits ----
   const products = [
     { name: "Berbérine 500mg — 120 gélules", price: 292, oldPrice: 750, discount: 61, stock: 3, rating: 4.6, reviews: 128, color: "#8FA84C", description: "Complément alimentaire à base de berbérine, un actif naturel reconnu pour soutenir la glycémie et le métabolisme. 120 gélules dosées à 500mg, sans additifs superflus.", whatsapp: "22900000000", image: "images/im1.jpeg", reviewList: [
       { name: "Amina K.", rating: 5, comment: "Très efficace, je recommande." },
@@ -254,7 +177,18 @@
     ] },
     { name: "Oméga-3 Huile de poisson", price: 472, oldPrice: 873.14, discount: 46, stock: 2, rating: 4.4, reviews: 47, color: "#C9C2AE", description: "Huile de poisson riche en EPA et DHA, pour soutenir la santé cardiovasculaire et cognitive.", whatsapp: "22900000000", image: "images/im5.jpeg", reviewList: [] },
     { name: "Complexe Vitamine B", price: 245, oldPrice: 500, discount: 51, stock: 10, rating: 4.7, reviews: 88, color: "#7A2E33", description: "Complexe complet de vitamines B pour soutenir l'énergie quotidienne et le bon fonctionnement du système nerveux.", whatsapp: "22900000000", image: "images/im6.jpeg", reviewList: [] },
+    { name: "PC Portable HP 15\"", price: 185000, oldPrice: 250000, discount: 26, stock: 4, rating: 4.7, reviews: 32, color: "#3E7CA6", description: "Ordinateur portable état neuf, idéal bureautique et multimédia.", whatsapp: "22901650162229", image: "images/laptop1.jpeg", reviewList: [] },
+    { name: "PC Portable Dell", price: 210000, oldPrice: 280000, discount: 25, stock: 2, rating: 4.5, reviews: 18, color: "#16233A", description: "Ordinateur portable Dell état neuf, parfait pour le travail.", whatsapp: "22901650162229", image: "images/laptop2.jpeg", reviewList: [] },
+    { name: "PC Portable Lenovo ThinkPad", price: 195000, oldPrice: 260000, discount: 25, stock: 3, rating: 4.8, reviews: 27, color: "#7A2E33", description: "ThinkPad reconditionné état neuf, robuste et fiable.", whatsapp: "22901650162229", image: "images/laptop3.jpeg", reviewList: [] },
+    { name: "PC Portable Macbook Pro 13\"", price: 350000, oldPrice: 400000, discount: 12, stock: 1, rating: 4.9, reviews: 15, color: "#C9C2AE", description: "Macbook Pro état neuf, idéal pour les professionnels de la création.", whatsapp: "22901650162229", image: "images/laptop4.jpeg", reviewList: [] },
+    { name: "PC Portable Asus ZenBook", price: 220000, oldPrice: 300000, discount: 27, stock: 5, rating: 4.6, reviews: 22, color: "#3E7CA6", description: "Asus ZenBook état neuf, léger et performant.", whatsapp: "22901650162229", image: "images/laptop5.jpeg", reviewList: [] },
+    { name: "PC Portable Acer Aspire", price: 180000, oldPrice: 250000, discount: 28, stock: 3, rating: 4.4, reviews: 19, color: "#16233A", description: "Acer Aspire reconditionné état neuf, bon rapport qualité-prix.", whatsapp: "22901650162229", image: "images/laptop6.jpeg", reviewList: [] },
+    { name: "VICTUS BY HP GAMING Laptop 15-fb3xxx", price: 410000, oldPrice: 510000, discount: 17, stock: 2, rating: 4.5, reviews: 10, color: "#7A2E33", description: "Ordinateur portable gaming VICTUS BY HP état neuf, puissant et performant.", whatsapp: "22901650162229", image: "images/im11.jpeg", reviewList: [] }
   ];
+
+  // Marque et état de chaque produit (même ordre que le tableau products ci-dessus)
+  const productBrands = ["Dell", "Dell", "Dell", "HP", "HP", "HP", "HP", "Dell", "Lenovo", "Macbook","Asus", "Acer" ,"Victus"];
+  const productEtats  = ["Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Venu", "Venu", "Venu", "Neuf", "Neuf", "Neuf", "Neuf"];
 
   function starRow(rating) {
     let out = '';
@@ -264,45 +198,72 @@
     return out;
   }
 
-  const grid = document.getElementById('product-grid');
-  products.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = `fade-up stagger-${(i % 6) + 1} card-lift bg-white rounded-2xl border border-sand overflow-hidden flex flex-col`;
-    card.innerHTML = `
-      <div class="relative aspect-square overflow-hidden">
-        <span class="absolute top-2 left-2 bg-ember text-white text-[11px] font-bold px-2 py-1 rounded-md price-tag z-10">-${p.discount}%</span>
-        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-      </div>
-      <div class="p-3 flex flex-col gap-1.5 flex-1">
-        <p class="font-mono font-semibold text-lg leading-none">${p.price.toFixed(2)} <span class="text-xs font-body">FCFA</span></p>
-        <p class="text-xs text-coal/40 line-through">${p.oldPrice.toFixed(2)} FCFA</p>
-        <p class="text-sm font-medium leading-snug line-clamp-2 mt-1">${p.name}</p>
-
-        <div class="flex items-center gap-1 mt-1">
-          ${starRow(p.rating)}
-          <span class="text-[11px] text-coal/50 ml-1">(${p.reviews})</span>
+  function renderCards(gridId, indices) {
+    const grid = document.getElementById(gridId);
+    indices.forEach(i => {
+      const p = products[i];
+      const card = document.createElement('div');
+      card.className = `fade-up stagger-${(i % 6) + 1} card-lift bg-white rounded-2xl border border-sand overflow-hidden flex flex-col`;
+      card.innerHTML = `
+        <div class="relative aspect-square overflow-hidden">
+          <span class="absolute top-2 left-2 bg-ember text-white text-[11px] font-bold px-2 py-1 rounded-md price-tag z-10">-${p.discount}%</span>
+          <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
         </div>
+        <div class="p-3 flex flex-col gap-1.5 flex-1">
+          <p class="font-mono font-semibold text-lg leading-none">${p.price.toFixed(2)} <span class="text-xs font-body">FCFA</span></p>
+          <p class="text-xs text-coal/40 line-through">${p.oldPrice.toFixed(2)} FCFA</p>
+          <p class="text-sm font-medium leading-snug line-clamp-2 mt-1">${p.name}</p>
 
-        <div class="w-full h-1.5 bg-sand rounded-full mt-1 overflow-hidden">
-          <div class="h-full bg-ember rounded-full" style="width:${Math.min(100, p.stock * 3)}%"></div>
-        </div>
-        <p class="text-[11px] text-coal/50">${p.stock} article${p.stock > 1 ? 's' : ''} restant${p.stock > 1 ? 's' : ''}</p>
+          <div class="flex items-center gap-1 mt-1">
+            ${starRow(p.rating)}
+            <span class="text-[11px] text-coal/50 ml-1">(${p.reviews})</span>
+          </div>
 
-        <div class="flex flex-col gap-1.5 mt-2">
-          <button onclick="addToCart(this)" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-xs font-semibold py-2 rounded-lg">Ajouter au panier</button>
-          <button onclick="openModal(${i})" class="border border-sand hover:border-emerald-deep hover:text-emerald-deep transition text-xs font-medium py-2 rounded-lg">Voir les détails</button>
-          <div class="flex gap-1.5">
-            <a href="https://wa.me/${p.whatsapp}" target="_blank" class="flex-1 flex items-center justify-center gap-1 border border-sand hover:border-[#25D366] hover:text-[#128C4A] transition text-xs font-medium py-1.5 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.17L2 22l5.06-1.53a9.9 9.9 0 004.98 1.34c5.46 0 9.91-4.45 9.91-9.9C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.1.11-1.78-.11-.41-.13-.94-.3-1.62-.6-2.86-1.24-4.72-4.13-4.87-4.32-.14-.2-1.16-1.55-1.16-2.96 0-1.4.73-2.09 1-2.38.24-.27.53-.34.71-.34h.5c.16 0 .38-.02.58.45.24.56.79 1.94.86 2.08.07.14.12.31.02.5-.1.2-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.3.76 1.26 1.63 2.05 1.12 1 2.06 1.32 2.36 1.47.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.24.66-.14.28.1 1.78.84 2.08 1 .3.15.5.23.57.36.07.13.07.75-.17 1.42z"/></svg>
-              WhatsApp
-            </a>
-            <button onclick="openReviews(${i})" class="flex-1 border border-sand hover:border-gold hover:text-gold transition text-xs font-medium py-1.5 rounded-lg">Avis</button>
+          <div class="w-full h-1.5 bg-sand rounded-full mt-1 overflow-hidden">
+            <div class="h-full bg-ember rounded-full" style="width:${Math.min(100, p.stock * 3)}%"></div>
+          </div>
+          <p class="text-[11px] text-coal/50">${p.stock} article${p.stock > 1 ? 's' : ''} restant${p.stock > 1 ? 's' : ''}</p>
+
+          <div class="flex flex-col gap-1.5 mt-2">
+            <button onclick="addToCart(this)" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-xs font-semibold py-2 rounded-lg">Ajouter au panier</button>
+            <button onclick="removeFromCart(this)" class="border border-sand hover:border-ember hover:text-ember transition text-xs font-medium py-2 rounded-lg">Retirer du panier</button>
+            <button onclick="openModal(${i})" class="border border-sand hover:border-emerald-deep hover:text-emerald-deep transition text-xs font-medium py-2 rounded-lg">Voir les détails</button>
+            <div class="flex gap-1.5">
+              <a href="https://wa.me/${p.whatsapp}" target="_blank" class="flex-1 flex items-center justify-center gap-1 border border-sand hover:border-[#25D366] hover:text-[#128C4A] transition text-xs font-medium py-1.5 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.17L2 22l5.06-1.53a9.9 9.9 0 004.98 1.34c5.46 0 9.91-4.45 9.91-9.9C21.95 6.45 17.5 2 12.04 2zm5.8 14.13c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.1.11-1.78-.11-.41-.13-.94-.3-1.62-.6-2.86-1.24-4.72-4.13-4.87-4.32-.14-.2-1.16-1.55-1.16-2.96 0-1.4.73-2.09 1-2.38.24-.27.53-.34.71-.34h.5c.16 0 .38-.02.58.45.24.56.79 1.94.86 2.08.07.14.12.31.02.5-.1.2-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.3.76 1.26 1.63 2.05 1.12 1 2.06 1.32 2.36 1.47.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.24.66-.14.28.1 1.78.84 2.08 1 .3.15.5.23.57.36.07.13.07.75-.17 1.42z"/></svg>
+                WhatsApp
+              </a>
+              <button onclick="openReviews(${i})" class="flex-1 border border-sand hover:border-gold hover:text-gold transition text-xs font-medium py-1.5 rounded-lg">Avis</button>
+            </div>
           </div>
         </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Lire la marque demandée dans l'adresse (ex: index.html?brand=Dell)
+  const urlParams = new URLSearchParams(window.location.search);
+  const brandFilter = urlParams.get('brand');
+
+  let indicesToShow = [];
+  if (brandFilter) {
+    products.forEach((p, i) => {
+      if (productBrands[i] === brandFilter) indicesToShow.push(i);
+    });
+    document.getElementById('grid-title').textContent = `Articles ${brandFilter}`;
+  } else {
+    indicesToShow = products.map((p, i) => i);
+    for (let i = indicesToShow.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indicesToShow[i], indicesToShow[j]] = [indicesToShow[j], indicesToShow[i]];
+    }
+    document.getElementById('grid-title').textContent = 'Tous nos articles';
+  }
+
+  document.getElementById('grid-count').textContent = `${indicesToShow.length} article${indicesToShow.length > 1 ? 's' : ''}`;
+  renderCards('product-grid', indicesToShow);
+
 
   // ---- Modal détails produit ----
   const modal = document.getElementById('product-modal');
@@ -419,6 +380,15 @@
     document.getElementById('cart-count').textContent = cartCount;
     const original = btn.textContent;
     btn.textContent = "Ajouté ✓";
+    setTimeout(() => btn.textContent = original, 1200);
+  }
+  function removeFromCart(btn) {
+    if (cartCount > 0) {
+      cartCount--;
+      document.getElementById('cart-count').textContent = cartCount;
+    }
+    const original = btn.textContent;
+    btn.textContent = "Retiré";
     setTimeout(() => btn.textContent = original, 1200);
   }
 
