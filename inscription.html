@@ -11,24 +11,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-  body { background-color: #F5F8FF; }
-  .underline-grow { position: relative; }
-  .underline-grow::after {
-    content: ''; position: absolute; left: 0; bottom: -3px; height: 2px; width: 0%;
-    background: currentColor; transition: width .3s ease;
+  body {
+    background-color: #FDF9F0;
+    font-family: 'Manrope', sans-serif;
   }
-  .underline-grow:hover::after { width: 100%; }
-  @keyframes gradientSlide {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  .card-shadow {
+    box-shadow: 0 25px 80px -20px rgba(0, 0, 0, 0.06);
   }
-  .title-badge {
-    background: linear-gradient(270deg, #1A56DB, #12377E, #D8452F, #1A56DB);
-    background-size: 400% 400%;
-    animation: gradientSlide 6s ease infinite;
+  .phone-box {
+    border: 1.5px solid #E5E1D8;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .phone-box:focus-within {
+    border-color: #1A56DB;
+    box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.06);
+  }
+  .pass-input {
+    background-color: #FDF9F0;
+    border: 1.5px solid #E5E1D8;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .pass-input:focus {
+    border-color: #1A56DB;
+    box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.06);
+    outline: none;
+  }
+  .btn-blue {
+    background: linear-gradient(135deg, #0EA5E9 0%, #2563EB 100%);
+    transition: transform .15s ease, box-shadow .2s ease;
+  }
+  .btn-blue:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px -8px rgba(37, 99, 235, 0.45);
+  }
+  .btn-blue:active {
+    transform: scale(0.97);
   }
 </style>
+<base target="_blank">
 </head>
 <body class="font-body text-coal min-h-screen flex flex-col">
 
@@ -41,53 +61,115 @@
   </div>
 </header>
 
-<main class="flex-1 flex items-center justify-center px-4 py-12">
-  <div class="w-full max-w-md bg-white rounded-2xl border border-sand shadow-sm p-8">
-    <div class="flex justify-center mb-6">
-      <h1 class="title-badge font-display text-2xl font-semibold text-ivory rounded-full px-8 py-3">Créer un compte</h1>
+<main class="flex-1 flex items-center justify-center px-4 py-10">
+  <div class="w-full max-w-[400px] bg-white rounded-[32px] card-shadow p-10">
+
+    <!-- Titre -->
+    <div class="text-center mb-8">
+      <h1 class="font-display text-[2rem] font-bold text-[#0F172A] tracking-tight">Inscription</h1>
+      <p class="text-[0.95rem] text-[#64748B] mt-3 leading-relaxed">Remplissez vos informations pour continuer</p>
     </div>
-    <p class="text-sm text-coal/50 mb-6 text-center">Remplissez vos informations pour continuer</p>
+
+    <!-- Formulaire -->
     <form id="inscription-form" class="flex flex-col gap-4">
+
+      <!-- Nom -->
       <div>
-        <label class="text-sm font-medium block mb-1" for="nom">Nom</label>
-        <input id="nom" type="text" required placeholder="Ex: Dupont" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+        <label class="block text-[0.95rem] font-bold text-[#0F172A] mb-2" for="nom">Nom</label>
+        <input 
+          id="nom" 
+          type="text" 
+          required 
+          placeholder="Ex: Dupont" 
+          class="pass-input w-full h-[52px] rounded-full text-[0.95rem] text-[#0F172A] placeholder:text-[#CBD5E1] px-5"
+        >
       </div>
 
-      <div class="w-full text-center">
-        <label class="text-sm font-medium block mb-1" for="prenom">Prénom</label>
-        <input id="prenom" type="text" required placeholder="Ex: David" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
-      </div>
-
-      <div class="w-full text-center">
-        <label class="text-sm font-medium block mb-1" for="whatsapp">Numéro WhatsApp</label>
-        <input id="whatsapp" type="tel" required placeholder="Ex : 229 01 65 01 62 29" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
-      </div>
-
-      <div class="w-full text-center">
-        <label class="text-sm font-medium block mb-1" for="email">Email</label>
-        <input id="email" type="email" required placeholder="Ex:dupontdavid@example.com" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
-      </div>
-
-      <div class="w-full text-center">
-        <label class="text-sm font-medium block mb-1" for="password">Mot de passe</label>
-        <input id="password" type="password" required placeholder="••••••••" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm text-center outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
-      </div>
+      <!-- Prénom -->
       <div>
-        <label class="text-sm font-medium block mb-1" for="password-confirm">Confirmer le mot de passe</label>
-        <input id="password-confirm" type="password" required placeholder="••••••••" class="w-full border border-sand rounded-lg px-3 py-2.5 text-sm outline-none focus:border-emerald-deep focus:ring-2 focus:ring-emerald-deep/20 transition">
+        <label class="block text-[0.95rem] font-bold text-[#0F172A] mb-2" for="prenom">Prénom</label>
+        <input 
+          id="prenom" 
+          type="text" 
+          required 
+          placeholder="Ex: David" 
+          class="pass-input w-full h-[52px] rounded-full text-[0.95rem] text-[#0F172A] placeholder:text-[#CBD5E1] px-5"
+        >
       </div>
 
-      <p id="password-error" class="hidden text-xs text-ember">Les mots de passe ne correspondent pas.</p>
+      <!-- Numéro WhatsApp -->
+      <div>
+        <label class="block text-[0.95rem] font-bold text-[#0F172A] mb-2" for="whatsapp">Numéro WhatsApp</label>
+        <div class="phone-box flex items-center bg-white rounded-full overflow-hidden h-[52px]">
+          <div class="flex items-center gap-2 pl-5 pr-3 h-full border-r border-[#E5E1D8] shrink-0">
+            <span class="text-[1.1rem]">🇧🇯</span>
+            <span class="text-sm font-semibold text-[#0F172A]">+229</span>
+            <svg class="w-3.5 h-3.5 text-[#94A3B8]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <input 
+            id="whatsapp" 
+            type="tel" 
+            required 
+            placeholder="Ex : 229 01 65 01 62 29" 
+            class="flex-1 h-full bg-transparent outline-none text-[0.95rem] text-[#0F172A] placeholder:text-[#CBD5E1] px-4"
+          >
+        </div>
+      </div>
 
-      <button type="submit" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-sm font-semibold py-3 rounded-lg mt-2">Créer mon compte</button>
-      <a href="connexion.html" class="text-center text-sm font-medium underline-grow">Déjà un compte ? Se connecter</a>
+      <!-- Email -->
+      <div>
+        <label class="block text-[0.95rem] font-bold text-[#0F172A] mb-2" for="email">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          required 
+          placeholder="Ex: dupontdavid@example.com" 
+          class="pass-input w-full h-[52px] rounded-full text-[0.95rem] text-[#0F172A] placeholder:text-[#CBD5E1] px-5"
+        >
+      </div>
+
+      <!-- Mot de passe -->
+      <div>
+        <label class="block text-[0.95rem] font-bold text-[#0F172A] mb-2" for="password">Mot de passe</label>
+        <input 
+          id="password" 
+          type="password" 
+          required 
+          placeholder="••••••••" 
+          class="pass-input w-full h-[52px] rounded-full text-[0.95rem] text-[#0F172A] placeholder:text-[#CBD5E1] px-5"
+        >
+      </div>
+
+      <!-- Confirmer mot de passe -->
+      <div>
+        <label class="block text-[0.95rem] font-bold text-[#0F172A] mb-2" for="password-confirm">Confirmer le mot de passe</label>
+        <input 
+          id="password-confirm" 
+          type="password" 
+          required 
+          placeholder="••••••••" 
+          class="pass-input w-full h-[52px] rounded-full text-[0.95rem] text-[#0F172A] placeholder:text-[#CBD5E1] px-5"
+        >
+      </div>
+
+      <p id="password-error" class="hidden text-xs text-ember text-center">Les mots de passe ne correspondent pas.</p>
+
+      <!-- Bouton -->
+      <button type="submit" class="btn-blue w-full h-[58px] rounded-full text-white font-bold text-[1.05rem] flex items-center justify-center gap-2.5 mt-1">
+        Créer mon compte
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </button>
+
+      <a href="connexion.html" class="text-center text-sm text-[#64748B] hover:text-[#1A56DB] transition py-2">
+        Déjà un compte ? <span class="font-semibold text-[#1A56DB]">Se connecter</span>
+      </a>
     </form>
 
-    <div id="success-msg" class="hidden mt-4 text-sm text-emerald-deep bg-emerald-deep/10 border border-emerald-deep/20 rounded-lg px-4 py-3">
+    <div id="success-msg" class="hidden mt-5 text-sm text-emerald-deep bg-emerald-deep/10 border border-emerald-deep/20 rounded-xl px-4 py-3 text-center">
       ✓ Compte créé avec succès !
     </div>
 
-    <div class="flex items-start gap-2 mt-6 pt-6 border-t border-sand">
+    <div class="flex items-start gap-2 mt-6 pt-6 border-t border-[#E5E1D8]">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-coal/40 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
       </svg>
@@ -117,8 +199,6 @@
     }
     errorMsg.classList.add('hidden');
 
-    // ⚠️ Pour l'instant, ce formulaire ne fait qu'afficher un message de confirmation.
-    // Il n'enregistre nulle part encore — il faudra le relier à une vraie base de données plus tard.
     document.getElementById('inscription-form').classList.add('hidden');
     document.getElementById('success-msg').classList.remove('hidden');
   });

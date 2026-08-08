@@ -70,6 +70,92 @@
   @media (prefers-reduced-motion: reduce) {
     .fade-up, .card-lift, .underline-grow::after { animation: none !important; transition: none !important; }
   }
+    /* ===== PANIER DRAWER ===== */
+  .cart-drawer {
+    position: fixed;
+    top: 0; right: 0;
+    width: 100%; max-width: 480px;
+    height: 100vh;
+    background: white;
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+  }
+  .cart-drawer.open { transform: translateX(0); }
+
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  .cart-item {
+    animation: slideIn .3s ease forwards;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .step-content {
+    animation: stepFade .35s ease forwards;
+  }
+  @keyframes stepFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-bounce:active { transform: scale(0.96); }
+
+  .radio-card {
+    border: 2px solid #E5E7EB;
+    transition: all .2s ease;
+    cursor: pointer;
+  }
+  .radio-card:hover { border-color: #1A56DB; }
+  .radio-card.selected {
+    border-color: #1A56DB;
+    background: #EFF6FF;
+  }
+
+  .qty-btn {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: all .15s ease;
+  }
+  .qty-btn:active { transform: scale(0.9); }
+
+  .progress-bar {
+    height: 4px;
+    background: #E5E7EB;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #1A56DB;
+    border-radius: 999px;
+    transition: width .4s ease;
+  }
+
+  .check-anim {
+    animation: checkPop .5s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  @keyframes checkPop {
+    0%   { transform: scale(0); opacity: 0; }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
 </style>
 </head>
 <body class="font-body text-coal">
@@ -123,12 +209,12 @@
         </div>
      </div>
 
-        <button class="relative flex items-center gap-2 text-sm font-medium">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.836l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 1.94-4.693 2.435-7.152.078-.383-.22-.738-.611-.738H5.106M7.5 14.25L5.106 5.25M7.5 14.25L5.106 5.25m6.144 8.995V18.75m-.75-9h9.75" stroke-linejoin="round"/>
-          </svg>
-          Panier
-          <span id="cart-count" class="absolute -top-2 -right-3 bg-ember text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+        <button onclick="openCart()" class="relative flex items-center gap-2 text-sm font-medium">
+         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.836l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 1.94-4.693 2.435-7.152.078-.383-.22-.738-.611-.738H5.106M7.5 14.25L5.106 5.25M7.5 14.25L5.106 5.25m6.144 8.995V18.75m-.75-9h9.75" stroke-linejoin="round"/>
+         </svg>
+         Panier
+         <span id="cart-count" class="absolute -top-2 -right-3 bg-ember text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
         </button>
       </div>
     </div>
@@ -160,8 +246,11 @@
   </div>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5" id="product-grid"></div>
+  
 </main>
-<script >
+
+
+  <script>
   // ---- Données produits ----
   const products = [
     { name: "Berbérine 500mg — 120 gélules", price: 292, oldPrice: 750, discount: 61, stock: 3, rating: 4.6, reviews: 128, color: "#8FA84C", description: "Complément alimentaire à base de berbérine, un actif naturel reconnu pour soutenir la glycémie et le métabolisme. 120 gélules dosées à 500mg, sans additifs superflus.", whatsapp: "22900000000", image: "images/im1.jpeg", reviewList: [
@@ -183,13 +272,251 @@
     { name: "PC Portable Macbook Pro 13\"", price: 350000, oldPrice: 400000, discount: 12, stock: 1, rating: 4.9, reviews: 15, color: "#C9C2AE", description: "Macbook Pro état neuf, idéal pour les professionnels de la création.", whatsapp: "22901650162229", image: "images/laptop4.jpeg", reviewList: [] },
     { name: "PC Portable Asus ZenBook", price: 220000, oldPrice: 300000, discount: 27, stock: 5, rating: 4.6, reviews: 22, color: "#3E7CA6", description: "Asus ZenBook état neuf, léger et performant.", whatsapp: "22901650162229", image: "images/laptop5.jpeg", reviewList: [] },
     { name: "PC Portable Acer Aspire", price: 180000, oldPrice: 250000, discount: 28, stock: 3, rating: 4.4, reviews: 19, color: "#16233A", description: "Acer Aspire reconditionné état neuf, bon rapport qualité-prix.", whatsapp: "22901650162229", image: "images/laptop6.jpeg", reviewList: [] },
-    { name: "VICTUS BY HP GAMING Laptop 15-fb3xxx", price: 410000, oldPrice: 510000, discount: 17, stock: 2, rating: 4.5, reviews: 10, color: "#7A2E33", description: "Ordinateur portable gaming VICTUS BY HP état neuf, puissant et performant.", whatsapp: "22901650162229", image: "images/im11.jpeg", reviewList: [] }
+    { name: "VICTUS BY HP GAMING Laptop 15-fb3xxx", price: 410000, oldPrice: 510000, discount: 17, stock: 2, rating: 4.5, reviews: 10, color: "#7A2E33", description: "Ordinateur portable gaming VICTUS BY HP état neuf, puissant et performant.", whatsapp: "22901650162229", image: "images/im11.jpeg", reviewList: [] },
+    { name: "Chargeur Dell XPS 13", price: 8000, oldPrice: 12000, discount: 33, stock: 15, rating: 4.5, reviews: 40,color: "#3E7CA6",description: "Chargeur pour Dell XPS 13.", whatsapp: "22900000000", image: "images/im13.jpeg" },
+    { name: "Clavier mécanique K120", price: 15000, oldPrice: 20000, discount: 25, stock: 10, rating: 4.2, reviews: 30,color: "#7A2E33",description: "Clavier mécanique K120.", whatsapp: "22900000001", image: "images/clavier1.jpeg" },
+    { name: "Casque gaming G332", price: 25000, oldPrice: 30000, discount: 17, stock: 5, rating: 4.7, reviews: 50,color: "#C9C2AE",description: "Casque gaming G332.", whatsapp: "22900000002", image: "images/casque1.jpeg" },
+    { name: "Webcam HD C270", price: 12000, oldPrice: 15000, discount: 20, stock: 8, rating: 4.3, reviews: 25,color: "#3E7CA6",description: "Webcam HD C270.", whatsapp: "22900000003", image: "images/webcam1.jpeg" },
+    { name: "Carte mère ASUS ROG Strix B55₀-F", price: 8000, oldPrice: 100000, discount: 20, stock: 3, rating: 4.6, reviews: 15,color: "#16233A",description: "Carte mère ASUS ROG Strix B55₀-F.", whatsapp: "22900000004", image: "images/carte_mere1.jpeg" },
+    { name: "Barrette RAM Corsair Vengeance LPX 16GB (2x8GB) DDR4-3₂₀₀", price: 40000, oldPrice: 50000, discount: 20, stock: 12, rating: 4.8, reviews: 22,color: "#7A2E33",description: "Barrette RAM Corsair Vengeance LPX 16GB (2x8GB) DDR4-3₂₀₀.", whatsapp: "22900000015", image:"images/ram1.jpeg" },
+    { name:"Disque dur / SSD", price: 25000, oldPrice: 32000, discount: 22, stock: 7, rating: 4.4, reviews: 18,color: "#3E7CA6",description: "Disque dur / SSD.", whatsapp: "22900000006", image: "images/im1.jpeg" },
+    { name:"Câbles", price: 3500, oldPrice: 5000, discount: 30, stock: 20, rating: 4.1, reviews: 12,color: "#16233A",description: "Câbles.", whatsapp: "22900000007", image: "images/im1.jpeg" },
+    { name: "Souris sans fil M170", price: 8000, oldPrice: 12000, discount: 33, stock: 15, rating: 4.5, reviews: 40, color: "#3E7CA6", description: "Souris sans fil M170.", whatsapp: "22900000008", image: "images/souris1.jpeg" }
   ];
 
-  // Marque et état de chaque produit (même ordre que le tableau products ci-dessus)
-  const productBrands = ["Dell", "Dell", "Dell", "HP", "HP", "HP", "HP", "Dell", "Lenovo", "Macbook","Asus", "Acer" ,"Victus"];
-  const productEtats  = ["Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Venu", "Venu", "Venu", "Neuf", "Neuf", "Neuf", "Neuf"];
+  const productBrands = ["Dell", "Dell", "Dell", "HP", "HP", "HP", "HP", "Dell", "Lenovo", "Macbook","Asus", "Acer" ,"Victus" ,"Dell", "Logitech", "Logitech","Logitech","Composants", "Composants", "Composants",  "composants","HP"];
+  const productEtats  = ["Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Venu", "Venu", "Venu", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf", "Neuf"];
+// ============================================================
+// PANIER (localStorage)
+// ============================================================
+let cart = JSON.parse(localStorage.getItem('kalao_cart')) || [];
+let currentStep = 1;
+let deliveryMode = null;
+let paymentMode = null;
+const SHIPPING_COST = 2500;
 
+function saveCart() {
+  localStorage.setItem('kalao_cart', JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  const badge = document.getElementById('cart-count');
+  if (badge) badge.textContent = count;
+}
+
+function addToCart(btn, productIndex) {
+  const existing = cart.find(item => item.index === productIndex);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ index: productIndex, qty: 1 });
+  }
+  saveCart();
+  const original = btn.textContent;
+  btn.textContent = "Ajouté ✓";
+  setTimeout(() => btn.textContent = original, 1200);
+}
+
+function removeFromCart(btn, productIndex) {
+  const existing = cart.find(item => item.index === productIndex);
+  if (existing) {
+    if (existing.qty > 1) {
+      existing.qty--;
+    } else {
+      cart = cart.filter(item => item.index !== productIndex);
+    }
+    saveCart();
+  }
+  const original = btn.textContent;
+  btn.textContent = "Retiré";
+  setTimeout(() => btn.textContent = original, 1200);
+  if (document.getElementById('cart-drawer').classList.contains('open')) {
+    renderCartItems();
+  }
+}
+
+function changeQty(productIndex, delta) {
+  const item = cart.find(c => c.index === productIndex);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    cart = cart.filter(c => c.index !== productIndex);
+  }
+  saveCart();
+  renderCartItems();
+}
+
+// ============================================================
+// DRAWER PANIER
+// ============================================================
+function openCart() {
+  const overlay = document.getElementById('cart-overlay');
+  const drawer = document.getElementById('cart-drawer');
+  if (!overlay || !drawer) return;
+  overlay.classList.add('open');
+  drawer.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  goStep(1);
+  renderCartItems();
+}
+
+function closeCart() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderCartItems() {
+  const container = document.getElementById('cart-items');
+  const empty = document.getElementById('cart-empty');
+  const summary = document.getElementById('cart-summary');
+  const btn = document.getElementById('btn-step-1');
+
+  if (cart.length === 0) {
+      const container = document.getElementById('cart-items');
+  const empty = document.getElementById('cart-empty');
+  const summary = document.getElementById('cart-summary');
+  const btn = document.getElementById('btn-step-1');
+  
+  // Force le nettoyage
+  if (container) container.innerHTML = '';
+    container.innerHTML = '';
+    empty.classList.remove('hidden');
+    summary.classList.add('hidden');
+    if (btn) btn.classList.add('opacity-50', 'pointer-events-none');
+    document.getElementById('subtotal').textContent = '0 FCFA';
+    document.getElementById('shipping').textContent = '—';
+    document.getElementById('total').textContent = '0 FCFA';
+    return;
+  }
+
+  empty.classList.add('hidden');
+  summary.classList.remove('hidden');
+  if (btn) btn.classList.remove('opacity-50', 'pointer-events-none');
+
+  let subtotal = 0;
+  container.innerHTML = cart.map((item, idx) => {
+    const p = products[item.index];
+    subtotal += p.price * item.qty;
+    return `
+      <div class="cart-item flex gap-3 bg-sand/30 rounded-xl p-3" style="animation-delay:${idx*0.05}s">
+        <img src="${p.image}" alt="${p.name}" class="w-16 h-16 rounded-lg object-cover shrink-0" onerror="this.style.display='none'">
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">${p.name}</p>
+          <p class="text-xs text-coal/50">${p.price.toFixed(2)} FCFA / unité</p>
+          <div class="flex items-center justify-between mt-2">
+            <div class="flex items-center gap-2">
+              <button onclick="changeQty(${item.index}, -1)" class="qty-btn bg-white border border-sand text-coal hover:bg-sand/50">-</button>
+              <span class="text-sm font-semibold w-4 text-center">${item.qty}</span>
+              <button onclick="changeQty(${item.index}, 1)" class="qty-btn bg-white border border-sand text-coal hover:bg-sand/50">+</button>
+            </div>
+            <p class="font-mono font-semibold text-sm">${(p.price * item.qty).toFixed(2)} FCFA</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const shipping = deliveryMode === 'delivery' ? SHIPPING_COST : 0;
+  const total = subtotal + shipping;
+
+  document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' FCFA';
+  document.getElementById('shipping').textContent = shipping > 0 ? shipping.toFixed(2) + ' FCFA' : (deliveryMode === 'pickup' ? 'Gratuit' : '—');
+  document.getElementById('total').textContent = total.toFixed(2) + ' FCFA';
+}
+
+// ============================================================
+// ETAPES DE COMMANDE
+// ============================================================
+function goStep(step) {
+  currentStep = step;
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('step-' + i);
+    if (el) el.style.display = (i === step) ? 'block' : 'none';
+    
+    const label = document.getElementById('step-label-' + i);
+    if (label) {
+      label.classList.toggle('text-emerald-deep', i === step);
+      label.classList.toggle('text-coal/60', i !== step);
+    }
+  }
+  
+  const pf = document.getElementById('progress-fill');
+  if (pf) pf.style.width = (step * 25) + '%';
+  
+  // Remonte en haut du drawer à chaque changement d'étape
+  const body = document.getElementById('cart-body');
+  if (body) body.scrollTop = 0;
+
+  if (step === 3) {
+    const sub = cart.reduce((s, item) => s + products[item.index].price * item.qty, 0);
+    const ship = deliveryMode === 'delivery' ? SHIPPING_COST : 0;
+    const ps = document.getElementById('pay-subtotal');
+    const psh = document.getElementById('pay-shipping');
+    const pt = document.getElementById('pay-total');
+    if (ps) ps.textContent = sub.toFixed(2) + ' FCFA';
+    if (psh) psh.textContent = ship.toFixed(2) + ' FCFA';
+    if (pt) pt.textContent = (sub + ship).toFixed(2) + ' FCFA';
+  }
+}
+
+function selectDelivery(mode, el) {
+  deliveryMode = mode;
+  document.querySelectorAll('#step-2 .radio-card').forEach(c => {
+    c.classList.remove('selected');
+    c.querySelector('.radio-dot div').classList.add('hidden');
+  });
+  el.classList.add('selected');
+  el.querySelector('.radio-dot div').classList.remove('hidden');
+
+  const addr = document.getElementById('address-box');
+  if (mode === 'delivery') {
+    addr.classList.remove('hidden');
+    addr.classList.add('step-content');
+  } else {
+    addr.classList.add('hidden');
+    addr.classList.remove('step-content');
+    document.getElementById('address-input').value = '';
+  }
+}
+
+function selectPayment(mode, el) {
+  paymentMode = mode;
+  document.querySelectorAll('#step-3 .radio-card').forEach(c => {
+    c.classList.remove('selected');
+    c.querySelector('.radio-dot div').classList.add('hidden');
+  });
+  el.classList.add('selected');
+  el.querySelector('.radio-dot div').classList.remove('hidden');
+}
+
+function finalizeOrder() {
+  if (!paymentMode) { alert('Veuillez choisir un moyen de paiement.'); return; }
+  if (deliveryMode === 'delivery' && !document.getElementById('address-input').value.trim()) {
+    alert('Veuillez indiquer votre adresse de livraison.'); return;
+  }
+  const total = cart.reduce((s, item) => s + products[item.index].price * item.qty, 0) + (deliveryMode === 'delivery' ? SHIPPING_COST : 0);
+  document.getElementById('confirm-total').textContent = total.toFixed(2) + ' FCFA';
+  document.getElementById('confirm-mode').textContent = deliveryMode === 'delivery' ? 'Livraison' : 'Retrait en boutique';
+  document.getElementById('confirm-num').textContent = '#KL-' + (Math.floor(Math.random()*900000)+100000);
+  goStep(4);
+  cart = [];
+  saveCart();
+}
+
+function resetCart() {
+  currentStep = 1;
+  deliveryMode = null;
+  paymentMode = null;
+  document.querySelectorAll('.radio-card').forEach(c => {
+    c.classList.remove('selected');
+    c.querySelector('.radio-dot div').classList.add('hidden');
+  });
+  document.getElementById('address-input').value = '';
+  document.getElementById('address-box').classList.add('hidden');
+}
   function starRow(rating) {
     let out = '';
     for (let i = 1; i <= 5; i++) {
@@ -200,6 +527,7 @@
 
   function renderCards(gridId, indices) {
     const grid = document.getElementById(gridId);
+    if (!grid) return;
     indices.forEach(i => {
       const p = products[i];
       const card = document.createElement('div');
@@ -225,8 +553,8 @@
           <p class="text-[11px] text-coal/50">${p.stock} article${p.stock > 1 ? 's' : ''} restant${p.stock > 1 ? 's' : ''}</p>
 
           <div class="flex flex-col gap-1.5 mt-2">
-            <button onclick="addToCart(this)" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-xs font-semibold py-2 rounded-lg">Ajouter au panier</button>
-            <button onclick="removeFromCart(this)" class="border border-sand hover:border-ember hover:text-ember transition text-xs font-medium py-2 rounded-lg">Retirer du panier</button>
+            <button onclick="addToCart(this, ${i})" class="bg-emerald-deep hover:bg-emerald-dark transition text-ivory text-xs font-semibold py-2 rounded-lg btn-bounce">Ajouter au panier</button>
+            <button onclick="removeFromCart(this, ${i})" class="border border-sand hover:border-ember hover:text-ember transition text-xs font-medium py-2 rounded-lg btn-bounce">Retirer du panier</button>
             <button onclick="openModal(${i})" class="border border-sand hover:border-emerald-deep hover:text-emerald-deep transition text-xs font-medium py-2 rounded-lg">Voir les détails</button>
             <div class="flex gap-1.5">
               <a href="https://wa.me/${p.whatsapp}" target="_blank" class="flex-1 flex items-center justify-center gap-1 border border-sand hover:border-[#25D366] hover:text-[#128C4A] transition text-xs font-medium py-1.5 rounded-lg">
@@ -242,7 +570,7 @@
     });
   }
 
-  // Lire la marque demandée dans l'adresse (ex: index.html?brand=Dell)
+  // ---- Affichage grille ----
   const urlParams = new URLSearchParams(window.location.search);
   const brandFilter = urlParams.get('brand');
 
@@ -251,38 +579,52 @@
     products.forEach((p, i) => {
       if (productBrands[i] === brandFilter) indicesToShow.push(i);
     });
-    document.getElementById('grid-title').textContent = `Articles ${brandFilter}`;
+    const gt = document.getElementById('grid-title');
+    if (gt) gt.textContent = `Articles ${brandFilter}`;
   } else {
     indicesToShow = products.map((p, i) => i);
     for (let i = indicesToShow.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [indicesToShow[i], indicesToShow[j]] = [indicesToShow[j], indicesToShow[i]];
     }
-    document.getElementById('grid-title').textContent = 'Tous nos articles';
+    const gt = document.getElementById('grid-title');
+    if (gt) gt.textContent = 'Tous nos articles';
   }
 
-  document.getElementById('grid-count').textContent = `${indicesToShow.length} article${indicesToShow.length > 1 ? 's' : ''}`;
+  const gc = document.getElementById('grid-count');
+  if (gc) gc.textContent = `${indicesToShow.length} article${indicesToShow.length > 1 ? 's' : ''}`;
+  updateCartBadge();
   renderCards('product-grid', indicesToShow);
 
-
+  
   // ---- Modal détails produit ----
   const modal = document.getElementById('product-modal');
   let currentModalIndex = null;
 
   function openModal(index) {
+    if (!modal) return;
     const p = products[index];
     currentModalIndex = index;
 
-    document.getElementById('modal-image').style.background = 'transparent';
-    document.getElementById('modal-image').innerHTML = `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">`;
-    document.getElementById('modal-discount').textContent = `-${p.discount}%`;
-    document.getElementById('modal-name').textContent = p.name;
-    document.getElementById('modal-stars').innerHTML = starRow(p.rating) + `<span class="text-xs text-coal/50 ml-1">(${p.reviews} avis)</span>`;
-    document.getElementById('modal-price').textContent = `${p.price.toFixed(2)} Dhs`;
-    document.getElementById('modal-oldprice').textContent = `${p.oldPrice.toFixed(2)} Dhs`;
-    document.getElementById('modal-desc').textContent = p.description;
-    document.getElementById('modal-stock').textContent = `${p.stock} article${p.stock > 1 ? 's' : ''} restant${p.stock > 1 ? 's' : ''}`;
-    document.getElementById('modal-whatsapp').href = `https://wa.me/${p.whatsapp}`;
+    const mi = document.getElementById('modal-image');
+    const md = document.getElementById('modal-discount');
+    const mn = document.getElementById('modal-name');
+    const ms = document.getElementById('modal-stars');
+    const mp = document.getElementById('modal-price');
+    const mo = document.getElementById('modal-oldprice');
+    const mde = document.getElementById('modal-desc');
+    const mst = document.getElementById('modal-stock');
+    const mw = document.getElementById('modal-whatsapp');
+
+    if (mi) { mi.style.background = 'transparent'; mi.innerHTML = `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">`; }
+    if (md) md.textContent = `-${p.discount}%`;
+    if (mn) mn.textContent = p.name;
+    if (ms) ms.innerHTML = starRow(p.rating) + `<span class="text-xs text-coal/50 ml-1">(${p.reviews} avis)</span>`;
+    if (mp) mp.textContent = `${p.price.toFixed(2)} Dhs`;
+    if (mo) mo.textContent = `${p.oldPrice.toFixed(2)} Dhs`;
+    if (mde) mde.textContent = p.description;
+    if (mst) mst.textContent = `${p.stock} article${p.stock > 1 ? 's' : ''} restant${p.stock > 1 ? 's' : ''}`;
+    if (mw) mw.href = `https://wa.me/${p.whatsapp}`;
 
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -290,19 +632,20 @@
   }
 
   function closeModal() {
+    if (!modal) return;
     modal.classList.add('hidden');
     modal.classList.remove('flex');
     document.body.style.overflow = '';
   }
 
-  document.getElementById('modal-close').addEventListener('click', closeModal);
-  document.getElementById('modal-backdrop').addEventListener('click', closeModal);
-  document.getElementById('modal-add').addEventListener('click', () => {
-    addToCart(document.getElementById('modal-add'));
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { closeModal(); closeReviews(); }
-  });
+  if (modal) {
+    const mc = document.getElementById('modal-close');
+    const mb = document.getElementById('modal-backdrop');
+    const ma = document.getElementById('modal-add');
+    if (mc) mc.addEventListener('click', closeModal);
+    if (mb) mb.addEventListener('click', closeModal);
+    if (ma) ma.addEventListener('click', () => addToCart(ma));
+  }
 
   // ---- Modal avis ----
   const reviewsModal = document.getElementById('reviews-modal');
@@ -311,6 +654,7 @@
 
   function renderReviewsList(p) {
     const list = document.getElementById('reviews-list');
+    if (!list) return;
     if (p.reviewList.length === 0) {
       list.innerHTML = `<p class="text-sm text-coal/50">Aucun avis pour l'instant. Soyez le premier à en laisser un !</p>`;
       return;
@@ -328,6 +672,7 @@
 
   function renderStarPicker() {
     const picker = document.getElementById('reviews-star-picker');
+    if (!picker) return;
     picker.innerHTML = '';
     for (let i = 1; i <= 5; i++) {
       const s = document.createElement('button');
@@ -339,15 +684,20 @@
   }
 
   function openReviews(index) {
+    if (!reviewsModal) return;
     currentReviewsIndex = index;
     pickedStars = 5;
     const p = products[index];
-    document.getElementById('reviews-title').textContent = `Avis — ${p.name}`;
-    document.getElementById('reviews-summary').innerHTML = starRow(p.rating) + `<span class="text-sm text-coal/60 ml-1">${p.rating} sur 5 (${p.reviews} avis)</span>`;
+    const rt = document.getElementById('reviews-title');
+    const rs = document.getElementById('reviews-summary');
+    if (rt) rt.textContent = `Avis — ${p.name}`;
+    if (rs) rs.innerHTML = starRow(p.rating) + `<span class="text-sm text-coal/60 ml-1">${p.rating} sur 5 (${p.reviews} avis)</span>`;
     renderReviewsList(p);
     renderStarPicker();
-    document.getElementById('reviews-name').value = '';
-    document.getElementById('reviews-comment').value = '';
+    const rn = document.getElementById('reviews-name');
+    const rc = document.getElementById('reviews-comment');
+    if (rn) rn.value = '';
+    if (rc) rc.value = '';
 
     reviewsModal.classList.remove('hidden');
     reviewsModal.classList.add('flex');
@@ -355,54 +705,187 @@
   }
 
   function closeReviews() {
+    if (!reviewsModal) return;
     reviewsModal.classList.add('hidden');
     reviewsModal.classList.remove('flex');
     document.body.style.overflow = '';
   }
 
-  document.getElementById('reviews-close').addEventListener('click', closeReviews);
-  document.getElementById('reviews-backdrop').addEventListener('click', closeReviews);
-  document.getElementById('reviews-submit').addEventListener('click', () => {
-    const name = document.getElementById('reviews-name').value.trim() || 'Client anonyme';
-    const comment = document.getElementById('reviews-comment').value.trim();
-    if (!comment) { alert('Merci d\'écrire un commentaire avant de publier.'); return; }
-    const p = products[currentReviewsIndex];
-    p.reviewList.unshift({ name, rating: pickedStars, comment });
-    p.reviews += 1;
-    renderReviewsList(p);
-    document.getElementById('reviews-name').value = '';
-    document.getElementById('reviews-comment').value = '';
+  if (reviewsModal) {
+    const rc = document.getElementById('reviews-close');
+    const rb = document.getElementById('reviews-backdrop');
+    const rs = document.getElementById('reviews-submit');
+    if (rc) rc.addEventListener('click', closeReviews);
+    if (rb) rb.addEventListener('click', closeReviews);
+    if (rs) rs.addEventListener('click', () => {
+      const rn = document.getElementById('reviews-name');
+      const rco = document.getElementById('reviews-comment');
+      const name = (rn && rn.value.trim()) || 'Client anonyme';
+      const comment = rco ? rco.value.trim() : '';
+      if (!comment) { alert('Merci d\'écrire un commentaire avant de publier.'); return; }
+      const p = products[currentReviewsIndex];
+      p.reviewList.unshift({ name, rating: pickedStars, comment });
+      p.reviews += 1;
+      renderReviewsList(p);
+      if (rn) rn.value = '';
+      if (rco) rco.value = '';
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { closeModal(); closeReviews(); closeCart(); }
   });
 
-  let cartCount = 0;
-  function addToCart(btn) {
-    cartCount++;
-    document.getElementById('cart-count').textContent = cartCount;
-    const original = btn.textContent;
-    btn.textContent = "Ajouté ✓";
-    setTimeout(() => btn.textContent = original, 1200);
-  }
-  function removeFromCart(btn) {
-    if (cartCount > 0) {
-      cartCount--;
-      document.getElementById('cart-count').textContent = cartCount;
-    }
-    const original = btn.textContent;
-    btn.textContent = "Retiré";
-    setTimeout(() => btn.textContent = original, 1200);
-  }
-
-  // Countdown
+  // ---- Countdown ----
   let seconds = 11 * 60 + 27;
   const cd = document.getElementById('countdown');
-  setInterval(() => {
-    if (seconds <= 0) return;
-    seconds--;
-    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
-    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-    const s = String(seconds % 60).padStart(2, '0');
-    cd.textContent = `${h}:${m}:${s}`;
-  }, 1000);
+  if (cd) {
+    setInterval(() => {
+      if (seconds <= 0) return;
+      seconds--;
+      const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+      const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      cd.textContent = `${h}:${m}:${s}`;
+    }, 1000);
+  }
 </script>
+<!-- ===================== DRAWER PANIER ===================== -->
+<div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+
+<div id="cart-drawer" class="cart-drawer">
+  <!-- Header -->
+  <div class="flex items-center justify-between px-6 py-4 border-b border-sand">
+    <h3 class="font-display text-xl font-semibold">Votre panier</h3>
+    <button onclick="closeCart()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-sand/50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Progress -->
+  <div class="px-6 pt-4 pb-2">
+    <div class="flex justify-between text-xs font-medium text-coal/60 mb-2">
+      <span id="step-label-1" class="text-emerald-deep">Panier</span>
+      <span id="step-label-2">Livraison</span>
+      <span id="step-label-3">Paiement</span>
+      <span id="step-label-4">Confirmation</span>
+    </div>
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-fill" style="width:25%"></div>
+    </div>
+  </div>
+
+  <!-- Contenu scrollable -->
+  <div class="flex-1 overflow-y-auto px-6 py-4" id="cart-body">
+
+    <!-- ETAPE 1 : PANIER -->
+    <div id="step-1" class="step-content">
+      <div id="cart-items" class="space-y-4"></div>
+      <div id="cart-empty" class="hidden text-center py-12">
+        <div class="text-5xl mb-3">🛒</div>
+        <p class="text-coal/50 text-sm">Votre panier est vide</p>
+        <button onclick="closeCart()" class="mt-4 text-sm font-semibold text-emerald-deep underline">Continuer les achats</button>
+      </div>
+      <div id="cart-summary" class="mt-6 pt-4 border-t border-sand space-y-2">
+        <div class="flex justify-between text-sm"><span class="text-coal/60">Sous-total</span><span id="subtotal" class="font-mono font-semibold">0 FCFA</span></div>
+        <div class="flex justify-between text-sm"><span class="text-coal/60">Frais de livraison</span><span id="shipping" class="font-mono font-semibold">—</span></div>
+        <div class="flex justify-between text-lg font-semibold pt-2 border-t border-sand">
+          <span>Total</span>
+          <span id="total" class="font-mono text-emerald-deep">0 FCFA</span>
+        </div>
+      </div>
+      <button id="btn-step-1" onclick="goStep(2)" class="w-full mt-6 bg-emerald-deep hover:bg-emerald-dark transition text-ivory font-semibold py-3 rounded-xl btn-bounce">
+        Passer la commande
+      </button>
+    </div>
+
+    <!-- ETAPE 2 : LIVRAISON / RETRAIT -->
+   <div id="step-2" class="step-content" style="display:none">
+      <h4 class="font-semibold mb-4">Mode de reception</h4>
+      <div class="space-y-3 mb-6">
+        <div class="radio-card rounded-xl p-4 flex items-start gap-3" onclick="selectDelivery('pickup', this)">
+          <div class="w-5 h-5 rounded-full border-2 border-sand flex items-center justify-center mt-0.5 radio-dot">
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-deep hidden"></div>
+          </div>
+          <div>
+            <p class="font-semibold text-sm">Retrait en boutique</p>
+            <p class="text-xs text-coal/50 mt-0.5">Venez chercher votre commande a notre boutique. Gratuit.</p>
+          </div>
+        </div>
+        <div class="radio-card rounded-xl p-4 flex items-start gap-3" onclick="selectDelivery('delivery', this)">
+          <div class="w-5 h-5 rounded-full border-2 border-sand flex items-center justify-center mt-0.5 radio-dot">
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-deep hidden"></div>
+          </div>
+          <div>
+            <p class="font-semibold text-sm">Livraison a domicile</p>
+            <p class="text-xs text-coal/50 mt-0.5">Nous vous livrons sous 24-48h. +2 500 FCFA</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="address-box" class="hidden mb-6">
+        <label class="block text-sm font-medium mb-2">Adresse de livraison</label>
+        <textarea id="address-input" rows="3" placeholder="Quartier, rue, point de repere…" class="w-full border border-sand rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-emerald-deep/30 focus:border-emerald-deep transition resize-none"></textarea>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="goStep(1)" class="flex-1 border border-sand hover:border-coal/30 transition font-medium py-3 rounded-xl text-sm">Retour</button>
+        <button id="btn-step-2" onclick="goStep(3)" class="flex-1 bg-emerald-deep hover:bg-emerald-dark transition text-ivory font-semibold py-3 rounded-xl btn-bounce">Continuer</button>
+      </div>
+    </div>
+
+    <!-- ETAPE 3 : PAIEMENT -->
+   <div id="step-3" class="step-content" style="display:none">
+      <h4 class="font-semibold mb-4">Moyen de paiement</h4>
+      <div class="space-y-3 mb-6">
+        <div class="radio-card rounded-xl p-4 flex items-center gap-3" onclick="selectPayment('cash', this)">
+          <div class="w-5 h-5 rounded-full border-2 border-sand flex items-center justify-center radio-dot">
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-deep hidden"></div>
+          </div>
+          <span class="text-sm font-medium">Paiement a la livraison / au retrait</span>
+        </div>
+        <div class="radio-card rounded-xl p-4 flex items-center gap-3" onclick="selectPayment('mobile', this)">
+          <div class="w-5 h-5 rounded-full border-2 border-sand flex items-center justify-center radio-dot">
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-deep hidden"></div>
+          </div>
+          <span class="text-sm font-medium">Mobile Money (MTN / Moov)</span>
+        </div>
+        <div class="radio-card rounded-xl p-4 flex items-center gap-3" onclick="selectPayment('card', this)">
+          <div class="w-5 h-5 rounded-full border-2 border-sand flex items-center justify-center radio-dot">
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-deep hidden"></div>
+          </div>
+          <span class="text-sm font-medium">Carte bancaire</span>
+        </div>
+      </div>
+
+      <div class="bg-sand/30 rounded-xl p-4 mb-6 text-sm space-y-1">
+        <div class="flex justify-between"><span class="text-coal/60">Sous-total</span><span id="pay-subtotal">0 FCFA</span></div>
+        <div class="flex justify-between"><span class="text-coal/60">Livraison</span><span id="pay-shipping">0 FCFA</span></div>
+        <div class="flex justify-between font-semibold text-base pt-1 border-t border-sand/60 mt-1"><span>Total</span><span id="pay-total" class="text-emerald-deep">0 FCFA</span></div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="goStep(2)" class="flex-1 border border-sand hover:border-coal/30 transition font-medium py-3 rounded-xl text-sm">Retour</button>
+        <button id="btn-step-3" onclick="finalizeOrder()" class="flex-1 bg-emerald-deep hover:bg-emerald-dark transition text-ivory font-semibold py-3 rounded-xl btn-bounce">Payer et finaliser</button>
+      </div>
+    </div>
+
+    <!-- ETAPE 4 : CONFIRMATION -->
+    <div id="step-4" class="step-content" style="display:none">
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-emerald-100 flex items-center justify-center check-anim">
+        <svg class="w-10 h-10 text-emerald-deep" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h4 class="font-display text-2xl font-semibold mb-2">Commande confirmee !</h4>
+      <p class="text-sm text-coal/60 mb-6">Merci pour votre confiance. Nous vous contacterons sous peu.</p>
+      <div class="bg-sand/30 rounded-xl p-4 text-left text-sm space-y-1 mb-6">
+        <div class="flex justify-between"><span class="text-coal/60">N commande</span><span id="confirm-num" class="font-mono font-semibold">#KL-000000</span></div>
+        <div class="flex justify-between"><span class="text-coal/60">Total paye</span><span id="confirm-total" class="font-semibold">0 FCFA</span></div>
+        <div class="flex justify-between"><span class="text-coal/60">Mode</span><span id="confirm-mode">—</span></div>
+      </div>
+      <button onclick="closeCart(); resetCart();" class="w-full bg-emerald-deep hover:bg-emerald-dark transition text-ivory font-semibold py-3 rounded-xl btn-bounce">Continuer les achats</button>
+    </div>
+
+  </div>
+</div> 
 </body>
 </html>

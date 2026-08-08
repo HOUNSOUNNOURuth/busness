@@ -224,7 +224,7 @@ function starRow(rating) {
     document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('brand-active'));
     btn.classList.add('brand-active');
 
-    document.getElementById('page-title').textContent = `Smartphones — ${brand}`;
+    document.getElementById('page-title').textContent = `Tablettes — ${brand}`;
     document.getElementById('page-subtitle').textContent = `Tous les articles ${brand}`;
 
     const gridNeuf = document.getElementById('grid-neuf');
@@ -240,7 +240,7 @@ function starRow(rating) {
     });
 
     if (countNeuf === 0) gridNeuf.innerHTML = `<p class="col-span-full text-sm text-coal/50">Aucun article ${brand} à l'état neuf pour l'instant.</p>`;
-    if (countVenu === 0) gridVenu.innerHTML = `<p class="col-span-full text-sm text-coal/50">Aucun article ${brand} à l'état venu pour l'instant.</p> ;
+    if (countVenu === 0) gridVenu.innerHTML = `<p class="col-span-full text-sm text-coal/50">Aucun article ${brand} à l'état venu pour l'instant.</p>`;
 
   }
   let cartCount = 0;
